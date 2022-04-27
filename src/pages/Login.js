@@ -25,13 +25,13 @@ const Login = () => {
                     alert("Sorry, You are not admin")
                 }
             })
-            console.log(user)
         } catch (error) {
-            console.log(error)
+            alert(error.message)
         }
     }
     return (
         <div className="flex flex-col w-full min-h-screen items-center justify-center">
+            <img src="images/tunnelViewer_logo.png" />
             <h1 className='text-3xl my-4 animate-bounce'>Login</h1>
             <form className='p-4 w-1/2 border rounded-lg' onSubmit={submitHandler} >
 

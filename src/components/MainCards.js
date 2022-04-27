@@ -8,7 +8,8 @@ const MainCards = ({ users }) => {
         <Row>
             {users?.map((user, index) => (
                 <Card key={index} title={user?.name} style={{ width: 300 }}>
-                    <p>Access Point: {user?.AcessPoint}</p>
+                    <p>AP Primary: {user?.AcessPoint}</p>
+                    <p>AP Secondary: {user["Secondary AP"]}</p>
                     <p>Distance: {user?.distance.toFixed(2)}m</p>
                 </Card>
             ))}

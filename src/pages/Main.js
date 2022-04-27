@@ -49,7 +49,9 @@ function Main() {
             }}
         >
             <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-                <div className="logo" />
+                <div>
+                    <img src="images/tunnelViewer_logo.png" />
+                </div>
                 <Menu theme='dark' defaultSelectedKeys={['1']} mode="inline" items={items} />
             </Sider>
             <Layout className="site-layout">
