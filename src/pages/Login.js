@@ -30,7 +30,7 @@ const Login = () => {
         }
     }
     return (
-        <div className="flex flex-col w-full min-h-screen items-center justify-center">
+        <div className="flex -mt-16 flex-col w-full min-h-screen items-center justify-center">
             <img src="images/tunnelViewer_logo.png" />
             <h1 className='text-3xl my-4 animate-bounce'>Login</h1>
             <form className='p-4 w-1/2 border rounded-lg' onSubmit={submitHandler} >
@@ -43,7 +43,10 @@ const Login = () => {
                     <label className='w-1/2 text-xl'>Password: </label>
                     <Input.Password placeholder='******' name="password" type={"password"} value={state.password} onChange={changeHandler} />
                 </div>
-                <Button className='px-2' htmlType='submit' type="primary">Submit</Button>
+                <div className='w-full flex justify-center'>
+                    <Button className='px-2' htmlType='submit' type="primary">Submit</Button>
+
+                </div>
             </form>
 
         </div>

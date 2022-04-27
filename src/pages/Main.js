@@ -1,11 +1,12 @@
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { UserOutlined, MenuOutlined } from "@ant-design/icons"
 import { useNavigate, useLocation, Link } from "react-router-dom"
 import MainCards from '../components/MainCards';
 import UserCards from '../components/UserCards';
 import { ref, onValue } from "firebase/database"
-import { db } from "../firebase"
+import { auth, db } from "../firebase"
+import { signOut } from "firebase/auth"
 const { Header, Content, Footer, Sider } = Layout;
 
 function Main() {
@@ -41,7 +42,10 @@ function Main() {
         }
         getUsers()
     }, [location])
-
+    const logout = async () => {
+        signOut(auth)
+        navigate("/login", { replace: true })
+    }
     return (
         <Layout
             style={{
@@ -56,11 +60,11 @@ function Main() {
             </Sider>
             <Layout className="site-layout">
                 <Header
-                    className="site-layout-background"
-                    style={{
-                        padding: 0,
-                    }}
-                />
+                    className="flex justify-end items-center px-2 site-layout-background"
+
+                >
+                    <Button type="primary" onClick={logout}>Logout</Button>
+                </Header>
                 <Content
                     style={{
                         margin: '0 16px',
