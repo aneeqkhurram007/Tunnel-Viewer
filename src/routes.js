@@ -1,3 +1,4 @@
+import DataTable from "./pages/DataTable";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
 
@@ -13,6 +14,10 @@ const routes = [
     {
         path: "/login",
         element: <Login />
+    },
+    {
+        path: "/data",
+        element: <DataTable />
     }
 ]
 export default routes;
