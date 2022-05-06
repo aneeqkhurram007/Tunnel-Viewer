@@ -6,7 +6,7 @@ import MainCards from '../components/MainCards';
 import UserCards from '../components/UserCards';
 import { ref, onValue } from "firebase/database"
 import { auth, db } from "../firebase"
-import { signOut } from "firebase/auth"
+import { onAuthStateChanged, signOut } from "firebase/auth"
 const { Header, Content, Footer, Sider } = Layout;
 
 function Main() {
@@ -34,6 +34,9 @@ function Main() {
     const { collapsed } = state;
     const [users, setusers] = useState([])
     useEffect(() => {
+        if (!auth.currentUser) {
+            navigate("/login", { replace: true })
+        }
         async function getUsers() {
             onValue(ref(db, "users"), snapshot => {
                 const data = snapshot.val();
@@ -42,6 +45,7 @@ function Main() {
         }
         getUsers()
     }, [location])
+
     const logout = async () => {
         signOut(auth)
         navigate("/login", { replace: true })

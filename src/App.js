@@ -10,8 +10,8 @@ function App() {
   useEffect(() => {
     if (!auth.currentUser) {
       navigate("/login", { replace: true })
-    }
 
+    }
   }, [])
 
   return (
