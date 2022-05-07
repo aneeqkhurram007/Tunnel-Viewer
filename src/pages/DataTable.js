@@ -1,40 +1,16 @@
 import { Button } from 'antd'
-import xlsx from 'json-as-xlsx'
-import React from 'react'
-import { useLocation } from 'react-router'
+import React, { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router'
+import { auth } from '../firebase'
 const DataTable = () => {
     const location = useLocation()
-    const downloadData = () => {
-
-        let data = [
-            {
-                sheet: "Location",
-                columns: [
-                    { label: "Name", value: "user" },
-                    { label: "AP Primary", value: "primary" },
-                    { label: "AP Seconday", value: "secondary" },
-                    { label: "Distance", value: "distance" },
-
-                ],
-                content: [
-                    {
-                        user: location.state.name, primary: location.state.AcessPoint,
-                        secondary: location.state["Secondary AP"],
-                        distance: location.state?.distance.toFixed(2)
-                    },
-                ],
-            },
-
-        ]
-
-        let settings = {
-            fileName: "data",
-            extraLength: 3,
-            writeOptions: {},
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (!auth.currentUser) {
+            navigate("/login", { replace: true })
         }
+    }, [location])
 
-        xlsx(data, settings)
-    }
     return (
         <div className='flex flex-col space-y-4 p-4'>
             <h1 className='text-2xl font-semibold'>User Data</h1>
@@ -48,20 +24,22 @@ const DataTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td className="text-center border">{location.state.name}</td>
-                        <td className="text-center border">{location.state.AcessPoint}</td>
-                        <td className="text-center border">{location.state["Secondary AP"]}</td>
-                        <td className="text-center border">{location.state?.distance.toFixed(2)}</td>
+                    {
+                        location.state?.map((ele, index) => (
+                            <tr key={index} >
+                                <td className="text-center border">{ele?.name}</td>
+                                <td className="text-center border">{ele?.AcessPoint}</td>
+                                <td className="text-center border">{ele["Secondary AP"]}</td>
+                                <td className="text-center border">{ele?.distance.toFixed(2)}</td>
 
-                    </tr>
+                            </tr>
+                        ))
+                    }
+
 
                 </tbody>
             </table>
-            <div>
-                <Button type='primary' size='large' className='my-3' onClick={downloadData}>Get Data</Button>
 
-            </div>
         </div>
     )
 }
