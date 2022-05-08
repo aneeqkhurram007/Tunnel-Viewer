@@ -1,37 +1,10 @@
 import { Button, Card, Row } from 'antd'
 import React from 'react'
 import { useNavigate } from 'react-router'
-import xlsx from 'json-as-xlsx'
 
 const MainCards = ({ users }) => {
     const navigate = useNavigate();
-    const downloadData = () => {
-
-        let data = [
-            {
-                sheet: "Location",
-                columns: [
-                    { label: "Name", value: "name" },
-                    { label: "AP Primary", value: "AcessPoint" },
-                    { label: "AP Seconday", value: "Secondary AP" },
-                    { label: "Distance", value: "distance" },
-
-                ],
-                content: users
-            },
-
-        ]
-
-        let settings = {
-            fileName: "data",
-            extraLength: 3,
-            writeOptions: {},
-        }
-
-        xlsx(data, settings)
-    }
     const getData = () => {
-        downloadData()
         navigate("/data", {
             state: users
         })
