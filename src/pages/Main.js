@@ -4,9 +4,10 @@ import { UserOutlined, MenuOutlined } from "@ant-design/icons"
 import { useNavigate, useLocation, Link } from "react-router-dom"
 import MainCards from '../components/MainCards';
 import UserCards from '../components/UserCards';
-import { ref, onValue } from "firebase/database"
+import { ref, onValue, getDatabase, get } from "firebase/database"
 import { auth, db } from "../firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth"
+import { useStateValue } from '../utils/StateValue';
 const { Header, Content, Footer, Sider } = Layout;
 
 function Main() {
@@ -32,22 +33,21 @@ function Main() {
         icon: <UserOutlined />
     }]
     const { collapsed } = state;
-    const [users, setusers] = useState([])
+    const [{ users }] = useStateValue()
+    const [{ loggedIn }, dispatch] = useStateValue()
     useEffect(() => {
         if (!auth.currentUser) {
             navigate("/login", { replace: true })
         }
-        async function getUsers() {
-            onValue(ref(db, "users"), snapshot => {
-                const data = snapshot.val();
-                setusers(Object.values(data))
-            })
-        }
-        getUsers()
-    }, [location])
+    }, [loggedIn])
+
 
     const logout = async () => {
         signOut(auth)
+        dispatch({
+            type: "LOGGED_IN",
+            payload: false
+        })
         navigate("/login", { replace: true })
     }
     return (

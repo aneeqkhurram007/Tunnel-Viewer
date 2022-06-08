@@ -5,9 +5,7 @@ import { useNavigate } from 'react-router'
 const MainCards = ({ users }) => {
     const navigate = useNavigate();
     const getData = () => {
-        navigate("/data", {
-            state: users
-        })
+        navigate("/data")
     }
 
     return (
@@ -15,7 +13,6 @@ const MainCards = ({ users }) => {
             <Row>
                 {users?.map((user, index) => (
                     <Card key={index} className="cursor-pointer"
-                        onClick={() => getData()}
                         title={user?.name} style={{ width: 300 }}>
                         <p>AP Primary: {user?.AcessPoint}</p>
                         <p>AP Secondary: {user["Secondary AP"]}</p>

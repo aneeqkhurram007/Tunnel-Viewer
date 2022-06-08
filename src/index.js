@@ -5,11 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import 'antd/dist/antd.css';
+import { StateProvider } from './utils/StateValue';
+import reducer from './utils/reducer';
+import state from './utils/store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <StateProvider reducer={reducer} state={state}>
+        <App />
+      </StateProvider>
     </BrowserRouter>
 
   </React.StrictMode>

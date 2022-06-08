@@ -1,17 +1,22 @@
 import { Button } from 'antd'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
-import { auth } from '../firebase'
+import { auth, db } from '../firebase'
 import xlsx from 'json-as-xlsx'
+import { onValue, ref } from 'firebase/database'
+import { useStateValue } from '../utils/StateValue'
 
 const DataTable = () => {
     const location = useLocation()
     const navigate = useNavigate()
+    const [{ users: state, loggedIn }] = useStateValue()
     useEffect(() => {
         if (!auth.currentUser) {
             navigate("/login", { replace: true })
         }
-    }, [location])
+    }, [loggedIn])
+
+
     const downloadData = () => {
 
         let data = [
@@ -24,7 +29,7 @@ const DataTable = () => {
                     { label: "Distance", value: "distance" },
 
                 ],
-                content: location?.state
+                content: state
             },
 
         ]
@@ -52,7 +57,7 @@ const DataTable = () => {
                 </thead>
                 <tbody>
                     {
-                        location.state?.map((ele, index) => (
+                        state?.map((ele, index) => (
                             <tr key={index} >
                                 <td className="text-center border">{ele?.name}</td>
                                 <td className="text-center border">{ele?.AcessPoint}</td>
