@@ -37,6 +37,7 @@ const Login = () => {
             }
         } catch (error) {
             alert(error.message)
+            setloading(false)
         }
     }
     return (
