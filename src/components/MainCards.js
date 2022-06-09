@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router'
 const MainCards = ({ users }) => {
     const navigate = useNavigate();
     const getData = () => {
-        navigate("/data")
+        navigate("/data", {
+            state: users
+        })
     }
 
     return (
@@ -22,7 +24,7 @@ const MainCards = ({ users }) => {
             </Row>
             <Row className='my-3'>
                 <Button type='primary' onClick={getData}>
-                    Get Data
+                    Freeze Data
                 </Button>
             </Row>
         </>

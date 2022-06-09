@@ -9,12 +9,16 @@ import { useStateValue } from '../utils/StateValue'
 const DataTable = () => {
     const location = useLocation()
     const navigate = useNavigate()
-    const [{ users: state, loggedIn }] = useStateValue()
+    const [{ loggedIn }] = useStateValue()
+    const [state, setstate] = useState([])
     useEffect(() => {
         if (!auth.currentUser) {
             navigate("/login", { replace: true })
         }
     }, [loggedIn])
+    useEffect(() => {
+        setstate(location.state)
+    }, [location])
 
 
     const downloadData = () => {
