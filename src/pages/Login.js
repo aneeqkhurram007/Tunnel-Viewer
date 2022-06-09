@@ -1,6 +1,6 @@
 import { Button, Input } from 'antd'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { onValue, ref } from 'firebase/database'
+import { get, onValue, ref } from 'firebase/database'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { SpinnerCircular } from 'spinners-react'
@@ -22,20 +22,19 @@ const Login = () => {
         try {
             setloading(true)
             const user = await signInWithEmailAndPassword(auth, state.email, state.password)
-            onValue(ref(db, `users/${user.user.uid}`), snapshot => {
-                if (snapshot.val().isAdmin === true) {
-                    setloading(false)
-                    dispatch({
-                        type: "LOGGED_IN",
-                        payload: true
-                    })
-                    navigate("/", { replace: true, state: "confirmed" })
-                }
-                else {
-                    alert("Sorry, You are not admin")
-                    setloading(false)
-                }
-            })
+            const snapshot = await get(ref(db, `users/${user.user.uid}`));
+            if (snapshot.val().isAdmin === true) {
+                setloading(false)
+                dispatch({
+                    type: "LOGGED_IN",
+                    payload: true
+                })
+                navigate("/", { replace: true, state: "confirmed" })
+            }
+            else {
+                alert("Sorry, You are not admin")
+                setloading(false)
+            }
         } catch (error) {
             alert(error.message)
         }
